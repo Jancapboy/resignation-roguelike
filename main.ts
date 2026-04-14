@@ -269,4 +269,4 @@ function initGame(): void {
 document.addEventListener('DOMContentLoaded', initGame);
 
 // 类型声明
-const els_actionsPanel: HTMLElement = document.querySelector('.actions-panel') as HTMLElement;
+declare const els_actionsPanel: HTMLElement;
