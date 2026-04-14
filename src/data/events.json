@@ -1,0 +1,225 @@
+{
+  "events": [
+    {
+      "id": "prod_incident_3am",
+      "title": "凌晨3点线上故障",
+      "description": "监控报警，核心服务挂了，用户正在微博骂街。你的手机在疯狂震动...",
+      "type": "crisis",
+      "weight": 15,
+      "conditions": {},
+      "effects": {
+        "sanity": -15,
+        "techDebt": 10
+      },
+      "choices": [
+        {
+          "text": "💻 起床处理",
+          "effects": { "sanity": -10, "colleagueRel": 5 }
+        },
+        {
+          "text": "😴 假装没看见",
+          "effects": { "sanity": 5, "colleagueRel": -20, "techDebt": 15 }
+        }
+      ]
+    },
+    {
+      "id": "requirement_change",
+      "title": "需求突然变更",
+      "description": "产品经理说：'这个需求很简单，怎么实现我不管，下周就要上线。' 你刚写完的代码又要重写了...",
+      "type": "crisis",
+      "weight": 20,
+      "conditions": {},
+      "effects": {
+        "sanity": -12,
+        "techDebt": 8
+      },
+      "choices": [
+        {
+          "text": "📝 接受变更",
+          "effects": { "sanity": -5 }
+        },
+        {
+          "text": "🔥 据理力争",
+          "effects": { "sanity": 3, "colleagueRel": -10 }
+        }
+      ]
+    },
+    {
+      "id": "colleague_quit",
+      "title": "战友离职",
+      "description": "坐你旁边的 senior dev 今天 last day。他是团队里唯一懂那坨祖传代码的人...",
+      "type": "normal",
+      "weight": 10,
+      "conditions": {
+        "colleagueRel": { "min": 30 }
+      },
+      "effects": {
+        "colleagueRel": -15,
+        "sanity": -5
+      },
+      "choices": [
+        {
+          "text": "🍻 送别聚餐",
+          "effects": { "sanity": 5, "salary": -200 }
+        },
+        {
+          "text": "💼 接手工作",
+          "effects": { "sanity": -10, "techDebt": 20 }
+        }
+      ]
+    },
+    {
+      "id": "code_review_shit",
+      "title": "代码 Review 被批",
+      "description": "你的 PR 被技术负责人留了 47 条 comment。'这里的命名不太语义化' '这个函数职责不单一'...",
+      "type": "normal",
+      "weight": 15,
+      "conditions": {
+        "techDebt": { "min": 30 }
+      },
+      "effects": {
+        "sanity": -8,
+        "colleagueRel": -5
+      },
+      "choices": [
+        {
+          "text": "🙇 虚心接受",
+          "effects": { "sanity": -3, "colleagueRel": 5 }
+        },
+        {
+          "text": "😤 心里骂娘",
+          "effects": { "sanity": 5, "colleagueRel": -10 }
+        }
+      ]
+    },
+    {
+      "id": "salary_raise",
+      "title": "意外的加薪",
+      "description": "HR 通知你：表现优异，下个月起薪资上调 15%。看来你的加班被看见了？",
+      "type": "opportunity",
+      "weight": 8,
+      "conditions": {
+        "colleagueRel": { "min": 40 }
+      },
+      "effects": {
+        "sanity": 10,
+        "salary": 2000
+      },
+      "choices": [
+        {
+          "text": "🙏 感谢老板",
+          "effects": { "colleagueRel": 5 }
+        },
+        {
+          "text": "🤔 默默接受",
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "team_building",
+      "title": "强制团建",
+      "description": "周六去郊区别墅玩'增强团队凝聚力'的游戏。可以不去，但会'被记住'。",
+      "type": "normal",
+      "weight": 12,
+      "conditions": {},
+      "effects": {},
+      "choices": [
+        {
+          "text": "🎉 参加并假装开心",
+          "effects": { "sanity": -5, "colleagueRel": 15, "salary": -300 }
+        },
+        {
+          "text": "🙅 借口有事不去",
+          "effects": { "sanity": 5, "colleagueRel": -15 }
+        }
+      ]
+    },
+    {
+      "id": "tech_sharing",
+      "title": "被迫技术分享",
+      "description": "CTO 看到你在用新技术，让你下周给全公司分享。你其实是刚 copy 了别人的代码...",
+      "type": "normal",
+      "weight": 10,
+      "conditions": {},
+      "effects": {
+        "sanity": -10
+      },
+      "choices": [
+        {
+          "text": "📚 熬夜准备",
+          "effects": { "sanity": -15, "colleagueRel": 10 }
+        },
+        {
+          "text": "🎲 临场发挥",
+          "effects": { "sanity": 5, "colleagueRel": -10 }
+        }
+      ]
+    },
+    {
+      "id": "refactor_task",
+      "title": "重构任务",
+      "description": "老板决定重写整个核心模块。'用最新技术栈，一个月完成，业务不能停'。",
+      "type": "crisis",
+      "weight": 12,
+      "conditions": {
+        "techDebt": { "min": 40 }
+      },
+      "effects": {
+        "sanity": -10,
+        "techDebt": -30
+      },
+      "choices": [
+        {
+          "text": "🚀 接受挑战",
+          "effects": { "sanity": -15, "salary": 1000 }
+        },
+        {
+          "text": "😅 推给同事",
+          "effects": { "colleagueRel": -25 }
+        }
+      ]
+    },
+    {
+      "id": "boss_talk",
+      "title": "老板突然找谈话",
+      "description": "'来我办公室一下'。你回想了一下最近的 commit，应该不会是裁员吧...",
+      "type": "normal",
+      "weight": 10,
+      "conditions": {},
+      "effects": {},
+      "choices": [
+        {
+          "text": "😰 忐忑赴约",
+          "effects": { "sanity": -5 }
+        },
+        {
+          "text": "😎 带电脑继续干活",
+          "effects": { "sanity": 3, "colleagueRel": -5 }
+        }
+      ]
+    },
+    {
+      "id": "legacy_code",
+      "title": "发现祖传代码",
+      "description": "你在 debug 时发现一段 8 年前的代码，作者已离职，注释写着'不要动这段代码'。但你必须改...",
+      "type": "crisis",
+      "weight": 15,
+      "conditions": {},
+      "effects": {
+        "sanity": -8,
+        "techDebt": 15
+      },
+      "choices": [
+        {
+          "text": "🔧 小心重构",
+          "effects": { "sanity": -15, "techDebt": -10 }
+        },
+        {
+          "text": "🩹 打补丁绕过",
+          "effects": { "techDebt": 25 }
+        }
+      ]
+    }
+  ]
+}
