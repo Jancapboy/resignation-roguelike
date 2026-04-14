@@ -1,0 +1,419 @@
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-tertiary: #0f3460;
+  --accent: #e94560;
+  --accent-hover: #ff6b6b;
+  --text-primary: #eaeaea;
+  --text-secondary: #a0a0a0;
+  --success: #4ecca3;
+  --warning: #ffc93c;
+  --danger: #e94560;
+  --info: #3498db;
+  
+  --sanity-color: #9b59b6;
+  --techdebt-color: #e74c3c;
+  --salary-color: #f1c40f;
+  --colleague-color: #3498db;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 头部 */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--bg-tertiary);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.version {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.day-counter {
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+/* 资源面板 */
+.resources-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.resource {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--bg-tertiary);
+  transition: border-color 0.3s;
+}
+
+.resource:hover {
+  border-color: var(--accent);
+}
+
+.resource-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+}
+
+.resource-info {
+  flex: 1;
+}
+
+.resource-name {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.resource-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.resource-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.3s;
+}
+
+#sanity-bar { background: linear-gradient(90deg, var(--sanity-color), #bb8fce); }
+#techdebt-bar { background: linear-gradient(90deg, var(--techdebt-color), #ec7063); }
+#colleaguerel-bar { background: linear-gradient(90deg, var(--colleague-color), #5dade2); }
+
+.resource-fill.danger {
+  background: var(--danger) !important;
+}
+
+.resource-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* 行动点 */
+.action-points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.ap-label {
+  margin-right: 15px;
+  color: var(--text-secondary);
+}
+
+.ap-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.ap-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  transition: background 0.3s;
+}
+
+.ap-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* 主游戏区 */
+.game-main {
+  margin-bottom: 20px;
+}
+
+/* 事件卡片 */
+.event-card {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid var(--accent);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.event-type {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.event-type.crisis { background: var(--danger); }
+.event-type.opportunity { background: var(--success); }
+.event-type.normal { background: var(--info); }
+
+.event-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.event-desc {
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+.event-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-btn {
+  padding: 12px 20px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+}
+
+.choice-btn:hover {
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+/* 行动按钮 */
+.actions-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--bg-tertiary);
+  border-radius: 10px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.action-name {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.action-cost {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* 下一天按钮 */
+.next-day-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.next-day-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+}
+
+/* 日志区 */
+.log-panel {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--bg-tertiary);
+  overflow: hidden;
+}
+
+.log-header {
+  padding: 12px 15px;
+  background: var(--bg-tertiary);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.log-content {
+  padding: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bg-tertiary);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-entry.important {
+  color: var(--accent);
+}
+
+.log-entry.success {
+  color: var(--success);
+}
+
+.log-entry.danger {
+  color: var(--danger);
+}
+
+/* 弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  border: 2px solid var(--accent);
+}
+
+.modal-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: var(--accent);
+}
+
+.modal-content p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  line-height: 1.8;
+}
+
+.restart-btn {
+  padding: 12px 30px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.restart-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .resources-panel {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions-panel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .game-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* 动画 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.resource.warning .resource-fill {
+  animation: pulse 1s infinite;
+}

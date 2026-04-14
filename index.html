@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>离职模拟器 | Resignation Roguelike</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 游戏头部 -->
+    <header class="game-header">
+      <div class="logo">💼 离职模拟器 <span class="version">v0.1</span></div>
+      <div class="day-counter">Day <span id="day">1</span> / 30</div>
+    </header>
+
+    <!-- 资源面板 -->
+    <section class="resources-panel">
+      <div class="resource" id="sanity-res">
+        <div class="resource-icon">🧠</div>
+        <div class="resource-info">
+          <span class="resource-name">理智值</span>
+          <div class="resource-bar">
+            <div class="resource-fill" id="sanity-bar"></div>
+          </div>
+          <span class="resource-value" id="sanity-value">50</span>
+        </div>
+      </div>
+      
+      <div class="resource" id="techdebt-res">
+        <div class="resource-icon">💩</div>
+        <div class="resource-info">
+          <span class="resource-name">技术债</span>
+          <div class="resource-bar">
+            <div class="resource-fill danger" id="techdebt-bar"></div>
+          </div>
+          <span class="resource-value" id="techdebt-value">20</span>
+        </div>
+      </div>
+      
+      <div class="resource" id="salary-res">
+        <div class="resource-icon">💰</div>
+        <div class="resource-info">
+          <span class="resource-name">薪资</span>
+          <div class="resource-display">
+            <span class="resource-value" id="salary-value">8000</span>/月
+          </div>
+        </div>
+      </div>
+      
+      <div class="resource" id="colleaguerel-res">
+        <div class="resource-icon">👥</div>
+        <div class="resource-info">
+          <span class="resource-name">同事关系</span>
+          <div class="resource-bar">
+            <div class="resource-fill" id="colleaguerel-bar"></div>
+          </div>
+          <span class="resource-value" id="colleaguerel-value">50</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行动点 -->
+    <section class="action-points">
+      <span class="ap-label">今日行动点:</span>
+      <div class="ap-dots" id="ap-dots">
+        <span class="ap-dot active"></span>
+        <span class="ap-dot active"></span>
+        <span class="ap-dot active"></span>
+        <span class="ap-dot active"></span>
+        <span class="ap-dot active"></span>
+      </div>
+    </section>
+
+    <!-- 主游戏区 -->
+    <main class="game-main">
+      <!-- 事件卡片 -->
+      <div class="event-card" id="event-card" style="display: none;">
+        <div class="event-type" id="event-type">日常</div>
+        <h3 class="event-title" id="event-title">事件标题</h3>
+        <p class="event-desc" id="event-desc">事件描述...</p>
+        <div class="event-choices" id="event-choices">
+          <!-- 动态生成选项 -->
+        </div>
+      </div>
+
+      <!-- 行动按钮 -->
+      <div class="actions-panel" id="actions-panel">
+        <button class="action-btn" data-action="code">
+          <span class="action-icon">💻</span>
+          <span class="action-name">写代码</span>
+          <span class="action-cost">2AP</span>
+        </button>
+        
+        <button class="action-btn" data-action="refactor">
+          <span class="action-icon">🔧</span>
+          <span class="action-name">重构</span>
+          <span class="action-cost">3AP</span>
+        </button>
+        
+        <button class="action-btn" data-action="meeting">
+          <span class="action-icon">📅</span>
+          <span class="action-name">开会</span>
+          <span class="action-cost">1AP</span>
+        </button>
+        
+        <button class="action-btn" data-action="slack">
+          <span class="action-icon">☕</span>
+          <span class="action-name">摸鱼</span>
+          <span class="action-cost">1AP</span>
+        </button>
+        
+        <button class="action-btn" data-action="social">
+          <span class="action-icon">🍻</span>
+          <span class="action-name">社交</span>
+          <span class="action-cost">2AP</span>
+        </button>
+        
+        <button class="action-btn" data-action="learn">
+          <span class="action-icon">📚</span>
+          <span class="action-name">学习</span>
+          <span class="action-cost">2AP</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- 下一天按钮 -->
+    <button class="next-day-btn" id="next-day">⏭ 结束今天</button>
+
+    <!-- 日志区 -->
+    <section class="log-panel">
+      <div class="log-header">📋 日志</div>
+      <div class="log-content" id="log-content">
+        <div class="log-entry">欢迎来到离职模拟器！你的目标是撑过 30 天...</div>
+      </div>
+    </section>
+
+    <!-- 游戏结束弹窗 -->
+    <div class="modal" id="game-over-modal" style="display: none;">
+      <div class="modal-content">
+        <h2 id="ending-title">游戏结束</h2>
+        <p id="ending-desc">结局描述...</p>
+        <button class="restart-btn" id="restart">🔄 重新开始</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
