@@ -4,6 +4,7 @@
 
 import { GameLoop, ActionType } from './src/core/game';
 import { EventManager } from './src/core/events';
+import { EndingManager } from './src/core/ending';
 import eventData from './src/data/events.json';
 
 // ============================================================
@@ -12,6 +13,7 @@ import eventData from './src/data/events.json';
 
 let game: GameLoop;
 let eventManager: EventManager;
+let endingManager: EndingManager;
 
 // ============================================================
 // DOM 元素
@@ -182,9 +184,22 @@ function chooseEventOption(eventId: string, choiceIndex: number): void {
 // 游戏结束
 // ============================================================
 
-function showGameOver(reason: string): void {
-  els.endingTitle.textContent = game.serialize().isGameOver ? '游戏结束' : '30天评估';
-  els.endingDesc.textContent = reason;
+function showGameOver(result: any): void {
+  const { ending, stats } = result;
+  els.endingTitle.textContent = ending.title;
+  els.endingTitle.style.color = ending.color;
+  els.endingDesc.innerHTML = `
+    ${ending.description}
+    
+    <br><br>
+    <strong>📊 数据统计:</strong><br>
+    • 存活天数: ${stats.totalDays}<br>
+    • 最终月薪: ¥${stats.finalSalary.toLocaleString()}<br>
+    • 累计储蓄: ¥${stats.savings.toLocaleString()}<br>
+    • 最终技术债: ${stats.techDebtFinal.toFixed(1)}<br>
+    • 执行行动: ${stats.actionsTaken} 次<br>
+    • 遭遇事件: ${stats.eventsEncountered} 次
+  `;
   els.gameOverModal.style.display = 'flex';
 }
 
@@ -196,12 +211,25 @@ function initGame(): void {
   // 创建游戏实例
   game = new GameLoop();
   eventManager = new EventManager();
+  endingManager = new EndingManager();
   eventManager.loadFromJSON(eventData);
   
   // 绑定事件监听
   game.on('action', (e) => {
     const actionName = e.data?.action?.name || '行动';
     log(`执行: ${actionName}`);
+    
+    // 检查是否触发结局
+    const result = endingManager.checkEnding(
+      game.resources.getSnapshot(),
+      game.day,
+      game.history
+    );
+    
+    if (result) {
+      showGameOver(result);
+    }
+    
     updateUI();
   });
   
@@ -249,6 +277,18 @@ function initGame(): void {
   
   // 绑定下一天按钮
   els.nextDayBtn.onclick = () => {
+    // 检查是否触发结局
+    const result = endingManager.checkEnding(
+      game.resources.getSnapshot(),
+      game.day,
+      game.history
+    );
+    
+    if (result) {
+      showGameOver(result);
+      return;
+    }
+    
     game.nextDay();
   };
   
